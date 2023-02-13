@@ -64,10 +64,9 @@ if __name__ == "__main__":
 
     original_df = extract(DATASET_URL)
     original_data_table_name = "original_historic_values"
-    print(original_df.head(1).to_string())
 
     clean_df = transform(original_df)
-    clean_table_name = "clean_historic_values"
+    clean_table_name = "clean_historic_values_all_states"
     print(clean_df.head(1).to_string())
 
     load_data_to_db(original_df, original_data_table_name, db_engine)
