@@ -29,16 +29,17 @@ CREATE or replace VIEW historic_values_resume as
     FROM public.clean_historic_values_all_states
     GROUP BY state;
 COMMIT;
-CREATE OR REPLACE PROCEDURE nombre_proc(
+create or replace procedure nombre_proc(
    state_to_delete_dates text,
    date_to_delete timestamp
 )
-LANGUAGE plpgsql    
-AS$$
-BEGIN
+language plpgsql    
+as \$$
+begin
     DELETE FROM public.clean_historic_values_all_states
     WHERE state = state_to_delete_dates
-    AND "date"= date_to_delete;
-    COMMIT;
-END;$$
+    and "date"= date_to_delete;
+
+    commit;
+end;\$$
 EOSQL
