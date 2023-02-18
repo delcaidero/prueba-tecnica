@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  app:
+    image: "jupyter/minimal-notebook"
+    #container_name: ${CONTAINER_NAME:-jupyter_notebook}
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+    ports:
+      #- "8888:8888"
+    volumes:
+      - ./app:/data
+      #- ${PWD}:/home/jovyan/work
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    networks:
+      - etl_network
+
+  postgres:
+    image: postgres:13.1
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+      timeout: 45s
+      interval: 10s
+      retries: 5
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - APP_DB_USER=docker
+      - APP_DB_PASS=docker
+      - APP_DB_NAME=docker
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+
+#docker-compose -f ./pg_docker_compose.yaml up -d
