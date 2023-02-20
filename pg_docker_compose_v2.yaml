@@ -1,16 +1,16 @@
 version: '3'
 
 services:
-  app:
+  # Optional Jupyter Notebook service
+  jupyter_notebook:
     image: "jupyter/minimal-notebook"
     #container_name: ${CONTAINER_NAME:-jupyter_notebook}
     environment:
       JUPYTER_ENABLE_LAB: "yes"
     ports:
-      #- "8888:8888"
+      - "8888:8888"
     volumes:
-      - ./app:/data
-      #- ${PWD}:/home/jovyan/work
+      - ${PWD}:/home/jovyan/work
     depends_on:
       - postgres
     links:
@@ -36,5 +36,10 @@ services:
       - ./db:/docker-entrypoint-initdb.d/
     ports:
       - 5432:5432
+    networks:
+      - etl_network
 
+networks:
+  etl_network: null
 #docker-compose -f ./pg_docker_compose.yaml up -d
+#docker-compose -f ./pg_docker_compose_v2.yaml up -d
