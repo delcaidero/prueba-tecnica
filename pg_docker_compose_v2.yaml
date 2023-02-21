@@ -1,16 +1,12 @@
 version: '3'
 
 services:
-  # Optional Jupyter Notebook service
-  jupyter_notebook:
-    image: "jupyter/minimal-notebook"
-    #container_name: ${CONTAINER_NAME:-jupyter_notebook}
-    environment:
-      JUPYTER_ENABLE_LAB: "yes"
-    ports:
-      - "8888:8888"
+
+  python_etl:
+    image: "python:3.10-slim"
+    command: bash -c "pip install /data/app/etltools/dist/etltools-0.1.0-py3-none-any.whl && python /data/app/etltools/etltools/etltools.py"
     volumes:
-      - ${PWD}:/home/jovyan/work
+      - ${PWD}:/data
     depends_on:
       - postgres
     links:
@@ -41,5 +37,5 @@ services:
 
 networks:
   etl_network: null
-#docker-compose -f ./pg_docker_compose.yaml up -d
+
 #docker-compose -f ./pg_docker_compose_v2.yaml up -d
