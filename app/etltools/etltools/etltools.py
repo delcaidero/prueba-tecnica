@@ -28,7 +28,7 @@ class etljob():
     import pandas as pd
     import etltools.etltools as etl
 
-    covidTracking = etljob('docker','docker','postgres','5432')
+    covidTracking = etl.etljob('docker','docker','postgres','5432')
     covidTracking.etl()
 
 

@@ -5,7 +5,11 @@ que levanta un contenedor Postgres y un contenedor Python.
 La BBDD se inicializa con el script suministrado en la carpeta bd.
 El contenedor python instala el paquete creado y ejecuta el script ETL.
 
-Estos 4 puntos se han desarrollado en el paquete etltools que se encuetra en la carpeta "app"
+```bash
+docker-compose -f ./pg_docker_compose_v2.yaml up -d
+```
+
+### Estos 4 puntos se han desarrollado en el paquete etltools que se encuetra en la carpeta "app"
 1. Obtener los datos publicados a través de la API:
 https://covidtracking.com/data/api (Historic values for all states).
 2. Filtrar los datos por aquellos que cumplen la condición:
@@ -16,8 +20,24 @@ de incidencia (date) y el estado (state).
 4. Llevar este modelo de datos a una base de datos relacional desarrollando
 un proceso ETL con Python que automatice esta labor.
 
-Estos 2 puntos se han desarrollado en el script que se encuetra en la carpeta "db".
-Se ha utiilizado una BBDD Postgres.
+Example:
+--------
+```bash
+import etltools.etltools as etl
+
+covidTracking = etl.etljob('docker','docker','postgres','5432')
+covidTracking.etl()
+```
+
+CLI Example (hardcoded parameters)
+--------
+```bash
+python etltools/etltools.py
+```
+
+### Estos 2 puntos se han desarrollado en el script que se encuetra en la carpeta "db".
+Se ha utilizado una BBDD Postgres.
+
 5. Generar una vista, en base de datos, que muestre un listado con los
 siguientes datos: estado, primera fecha de datos, última fecha de datos,
 número de días de datos, suma de casos positivos, suma de muertes
@@ -28,5 +48,5 @@ relacionados a un determinado estado en una fecha concreta. Es decir,
 que al ejecutar nombre_proc(estado, fecha), se borren los datos de la
 tabla generada para ese estado y esa fecha.
 
-El informe adicional se encuentra en la carpeta "eda"
+### El informe adicional se encuentra en la carpeta "eda"
 
