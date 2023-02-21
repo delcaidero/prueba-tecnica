@@ -20,18 +20,16 @@ de incidencia (date) y el estado (state).
 4. Llevar este modelo de datos a una base de datos relacional desarrollando
 un proceso ETL con Python que automatice esta labor.
 
-Example:
---------
 ```bash
+# Ejemplo
 import etltools.etltools as etl
 
 covidTracking = etl.etljob('docker','docker','postgres','5432')
 covidTracking.etl()
 ```
 
-CLI Example (hardcoded parameters)
---------
 ```bash
+# Ejemplo CLI con parametros predefinidos
 python etltools/etltools.py
 ```
 
